@@ -1,11 +1,12 @@
-import './App.css';
+import './App.css'
 
 function App() {
   return (
-    <div>
-      asd
-    </div>
-  );
+    <>
+      <div>+</div>
+      <input type="file" />
+    </>
+  )
 }
 
-export default App;
+export default App
