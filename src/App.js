@@ -1,11 +1,17 @@
 import './App.css'
 
 function App() {
+  const clickHandlerFileChange = (e) => {
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    reader.readAsText(file)
+    reader.onload = () => {
+      console.log(reader.result)
+    }
+  }
+
   return (
-    <>
-      <div>+</div>
-      <input type="file" />
-    </>
+    <input type="file" onChange={clickHandlerFileChange} />
   )
 }
 
