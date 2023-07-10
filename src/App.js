@@ -4,6 +4,7 @@ import { ListOfValues } from './components/ListOfValues'
 
 function App() {
   const [listOfvariables, setListOfVariables] = useState()
+  const [listOfData, setListOfData] = useState()
 
   let arrayOfStrings = []
 
@@ -21,12 +22,13 @@ function App() {
           // console.log(arrayOfStrings[i])
         }
         // console.log(arr[1].split(' '))
-        // console.log(arrayOfStrings)
         setListOfVariables(arrayOfStrings[0])
+        setListOfData(arrayOfStrings[2])
       }
     }
   }
-  // console.log(listOfvariables)
+  // console.log(arrayOfStrings)
+  console.log(listOfData)
 
   return (
     <>
