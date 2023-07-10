@@ -1,0 +1,8 @@
+.listOfVariables{
+  display: flex;
+  flex-direction: row;
+}
+
+.variable{
+  padding-left: 10px;
+}
