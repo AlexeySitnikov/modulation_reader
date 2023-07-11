@@ -22,7 +22,9 @@
   grid-template-columns: repeat(23, 1fr);
 }
 .containerCheckbox{
-  display: flex;
+  /* display: flex; */
+  display: grid;
+  grid-template-columns: repeat(23, 1fr);
 }
 
 .values{
