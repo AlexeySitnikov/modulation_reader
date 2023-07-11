@@ -1,6 +1,8 @@
 .listOfVariables{
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
+  display: grid;
+  grid-template-columns: repeat(23, 1fr);
 }
 
 .variable{
@@ -8,5 +10,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-left: 16px;
+  padding-left: 36px;
+}
+.checkbox{
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 36px; */
+  display: grid;
+  grid-template-columns: repeat(23, 1fr);
+}
+.containerCheckbox{
+  display: flex;
+}
+
+.values{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

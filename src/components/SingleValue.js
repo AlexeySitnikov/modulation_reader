@@ -1,9 +1,8 @@
 import style from './styles.module.css'
 
-export function Variable({ variable }) {
+export function SingleValue({ variable }) {
   return (
     <div className={style.variable}>
-      <input type="checkbox" />
       {variable}
     </div>
   )
