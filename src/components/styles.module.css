@@ -1,35 +1,28 @@
 .listOfVariables{
-  /* display: flex;
-  flex-direction: row; */
-  display: grid;
-  grid-template-columns: repeat(23, 1fr);
+  display: flex;
 }
 
 .variable{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-left: 36px;
-}
-.checkbox{
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-left: 36px; */
-  display: grid;
-  grid-template-columns: repeat(23, 1fr);
-}
-.containerCheckbox{
-  /* display: flex; */
-  display: grid;
-  grid-template-columns: repeat(23, 1fr);
+display: flex;
+align-self: center;
+align-items: center;
+padding-left: 10px;
+padding-right: 10px;
 }
 
-.values{
+.containerCheckbox{
+display: flex;
+}
+
+.checkbox{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-self: center;
   align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.column{
+  display: flex;
+  flex-direction: column;
 }

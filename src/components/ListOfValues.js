@@ -1,6 +1,6 @@
 import { RowOfCheckBox } from './RowOfCheckBox'
 import { RowOfValues } from './RowOfValues'
-// import style from './styles.module.css'
+import style from './styles.module.css'
 
 export function ListOfValues({ listOfvariables }) {
   if (!listOfvariables) {
@@ -11,7 +11,7 @@ export function ListOfValues({ listOfvariables }) {
     )
   }
   return (
-    <div>
+    <div className={style.column}>
       {/* <div className={style.checkbox}>
         {listOfvariables[0].split(' ').map(() => (
           <input type="checkbox" key={crypto.randomUUID()} />
@@ -24,7 +24,7 @@ export function ListOfValues({ listOfvariables }) {
             ? (
               <RowOfCheckBox key={crypto.randomUUID()} firstRow={el} />
             )
-            : <RowOfValues key={crypto.randomUUID()} element={el} />
+            : <RowOfValues key={crypto.randomUUID()} index={index} element={el} />
         ))}
     </div>
   )
