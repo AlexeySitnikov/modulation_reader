@@ -1,10 +1,15 @@
+import { useDispatch } from 'react-redux'
+import { addRow } from './Redux/Slices/checkRowSlice/checkRowSlice'
 import { SingleValue } from './SingleValue'
 import style from './styles.module.css'
 
 export function RowOfValues({ index, element }) {
+  const dispatch = useDispatch()
   const onClickRow = (e) => {
     e.stopPropagation()
-    console.log(index)
+    // e.preventDefault()
+    console.log(`from event ${index}`)
+    dispatch(addRow(index))
   }
 
   return (
