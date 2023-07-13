@@ -6,21 +6,23 @@ export const checkRowSlice = createSlice({
   initialState: initialRowChecked.rowsChecked,
   reducers: {
     addRow(state, action) {
-      const currentValue = state.find((value) => value.id === action.payload)
-      if (currentValue) {
-        currentValue.checked = !currentValue.checked
-      } else {
-        const rowsChecked = {
-          id: action.payload,
-          checked: true,
-        }
-        state.push(rowsChecked)
-      }
+    //   const currentValue = state.find((value) => value.id === action.payload)
+    //   if (currentValue) {
+    //     currentValue.checked = !currentValue.checked
+    //   } else {
+    //     const rowsChecked = {
+    //       id: action.payload,
+    //       checked: true,
+    //     }
+    // }
+      state.push(action.payload)
     },
+
     removeRow(state, action) {
-      const currentValue = state.find((value) => value.index === action.payload.index)
-      if (currentValue) {
-        currentValue.checked = false
+      const currentIndex = state.findIndex((index) => index === action.payload)
+      // console.log(action.payload.name)
+      if (currentIndex !== -1) {
+        state.splice(currentIndex, 1)
       }
     },
   },

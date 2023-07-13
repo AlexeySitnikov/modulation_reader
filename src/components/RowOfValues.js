@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { addRow } from './Redux/Slices/checkRowSlice/checkRowSlice'
+import { addRow, removeRow } from './Redux/Slices/checkRowSlice/checkRowSlice'
 import { SingleValue } from './SingleValue'
 import style from './styles.module.css'
 
@@ -8,8 +8,12 @@ export function RowOfValues({ index, element }) {
   const onClickRow = (e) => {
     e.stopPropagation()
     // e.preventDefault()
-    console.log(`from event ${index}`)
-    dispatch(addRow(index))
+    // console.log(`from event ${index}`)
+    if (!e.target.checked) {
+      dispatch(addRow(index))
+    } else {
+      dispatch(removeRow(index))
+    }
   }
 
   return (
