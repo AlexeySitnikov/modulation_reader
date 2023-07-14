@@ -6,12 +6,15 @@ export const checkColumnSlice = createSlice({
   initialState: initialChecked.columnChecked,
   reducers: {
     addColumn(state, action) {
-      const column = {
-        index: action.payload.index,
-        name: action.payload.nameOfValue,
+      const currentIndex = state.find((element) => element.index === action.payload.index)
+      if (!currentIndex) {
+        const column = {
+          index: action.payload.index,
+          name: action.payload.nameOfValue,
+        }
+        state.push(column)
+        state.sort((a, b) => (a.index - b.index))
       }
-      state.push(column)
-      state.sort((a, b) => (a.index - b.index))
     },
 
     removeColumn(state, action) {
@@ -20,11 +23,13 @@ export const checkColumnSlice = createSlice({
         state.splice(currentIndex, 1)
       }
     },
+
+    removeAllColumns: () => [],
   },
 })
 
 export const {
-  addColumn, removeColumn,
+  addColumn, removeColumn, removeAllColumns,
 } = checkColumnSlice.actions
 
 export const columnCheckedReducer = checkColumnSlice.reducer

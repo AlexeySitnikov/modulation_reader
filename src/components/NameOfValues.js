@@ -4,11 +4,15 @@ import { addColumn, removeColumn } from './Redux/Slices/columnCheckSlice/columnC
 
 export function NameOfValues({ nameOfValue, index }) {
   const dispatch = useDispatch()
+  const checkAllColumns = document.getElementById('checkAllColumns')
+  const isCheckAllColumns = checkAllColumns ? checkAllColumns.checked : false
+  if (isCheckAllColumns) {
+    dispatch(addColumn({ nameOfValue, index }))
+  }
 
   const onClickColumn = (e) => {
     e.stopPropagation()
     if (e.target.checked) {
-      console.log(nameOfValue, index)
       dispatch(addColumn({ nameOfValue, index }))
     } else {
       dispatch(removeColumn(index))
@@ -17,7 +21,7 @@ export function NameOfValues({ nameOfValue, index }) {
 
   return (
     <div className={style.values}>
-      <input type="checkbox" onClick={onClickColumn} />
+      <input type="checkbox" onClick={onClickColumn} defaultChecked={checkAllColumns ? checkAllColumns.checked : false} />
       {nameOfValue}
     </div>
   )
