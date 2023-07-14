@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { addRow, removeRow } from './Redux/Slices/checkRowSlice/checkRowSlice'
+import { addRow, removeRow } from './Redux/Slices/rowChwckSlice/rowCheckSlice'
 import { SingleValue } from './SingleValue'
 import style from './styles.module.css'
 
@@ -9,7 +9,7 @@ export function RowOfValues({ index, element }) {
     e.stopPropagation()
     // e.preventDefault()
     // console.log(`from event ${index}`)
-    if (!e.target.checked) {
+    if (e.target.checked) {
       dispatch(addRow(index))
     } else {
       dispatch(removeRow(index))

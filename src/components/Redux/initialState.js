@@ -1,7 +1,8 @@
 export const initialState = {
   rowsChecked: [],
+  columnChecked: [],
 }
 
 export const getInitialState = () => initialState
 
-export const initialRowChecked = getInitialState()
+export const initialChecked = getInitialState()
