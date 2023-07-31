@@ -8,7 +8,7 @@ export const checkRowSlice = createSlice({
     addRow(state, action) {
       const currentIndex = state.find((element) => element.index === action.payload.index)
       if (!currentIndex) {
-        console.log({ action })
+        // console.log({ action })
         state.push(action.payload)
         state.sort((a, b) => (a - b))
       }
@@ -21,11 +21,15 @@ export const checkRowSlice = createSlice({
       }
     },
     removeAllRows: () => [],
+
+    // getRows(state) {
+    //   // console.log(state)
+    // },
   },
 })
 
 export const {
-  addRow, removeRow, removeAllRows,
+  addRow, removeRow, removeAllRows, getRows,
 } = checkRowSlice.actions
 
 export const rowsCheckedReducer = checkRowSlice.reducer
