@@ -36,6 +36,7 @@ export function ListOfValues({ listOfvariables }) {
   const onClickButtonHandler = (e) => {
     e.preventDefault()
     e.stopPropagation()
+    setRows((prev) => ['asd', ...prev])
   }
 
   if (!rows) {
