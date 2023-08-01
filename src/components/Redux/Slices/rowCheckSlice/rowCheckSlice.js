@@ -6,8 +6,8 @@ export const checkRowSlice = createSlice({
   initialState: initialChecked.rowsChecked,
   reducers: {
     addAllRows(state, action) {
-      if (action.payload.length > 0) {
-        state.push(action.payload)
+      if (action.payload.length > 0 && state.length === 0) {
+        action.payload.forEach((element) => { state.push(element) })
       }
     },
 
@@ -22,24 +22,20 @@ export const checkRowSlice = createSlice({
     },
 
     addRow(state, action) {
-      const currentIndex = state.find((element) => (
-        element.index === action.payload.index
+      const currentElement = state.find((element) => (
+        element.index === action.payload.element.index
       ))
-      if (currentIndex) {
-        const element = {
-          ...currentIndex.element,
-          checked: !action.payload.checked,
-        }
-        const { index } = currentIndex
-        state.splice(currentIndex.index, 1, { element, index })
-        state.sort((a, b) => (a - b))
+      if (currentElement) {
+        currentElement.checked = !action.payload.checked
+        state.splice(currentElement.index, 1, currentElement)
       }
     },
 
     removeRow(state, action) {
-      const currentIndex = state.findIndex((element) => element.index === action.payload)
-      if (currentIndex !== -1) {
-        state.splice(currentIndex, 1)
+      const currentElement = state.find((element) => element.index === action.payload.index)
+      if (currentElement) {
+        currentElement.checked = !action.payload.checked
+        state.splice(currentElement.index, 1, currentElement)
       }
     },
     removeAllRows: () => [],

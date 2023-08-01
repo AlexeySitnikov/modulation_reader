@@ -3,21 +3,15 @@ import { addRow, removeRow } from './Redux/Slices/rowCheckSlice/rowCheckSlice'
 import { SingleValue } from './SingleValue'
 import style from './styles.module.css'
 
-export function RowOfValues({ index, element }) {
+export function RowOfValues({ element }) {
   const dispatch = useDispatch()
-  const checkAllRows = document.getElementById('checkAllRows')
-  const isCheckAllRows = checkAllRows ? checkAllRows.checked : false
-  if (isCheckAllRows) {
-    dispatch(addRow({ element, index }))
-  }
+
   const onClickRow = (e) => {
     e.stopPropagation()
     if (e.target.checked) {
-      dispatch(addRow({ element, index }))
-      // element.checked = !element.checked
-      // console.log({ element })
+      dispatch(addRow({ element }))
     } else {
-      dispatch(removeRow(index))
+      dispatch(removeRow(element))
     }
   }
 

@@ -19,7 +19,6 @@ function App() {
           .map((el) => el.replace(/\s\s+/g, ' '))
         setListOfVariables(arrayOfStrings)
       }
-      console.log(arrayOfStrings)
     }
   }
 
