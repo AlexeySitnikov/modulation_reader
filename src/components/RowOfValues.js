@@ -14,6 +14,8 @@ export function RowOfValues({ index, element }) {
     e.stopPropagation()
     if (e.target.checked) {
       dispatch(addRow({ element, index }))
+      // element.checked = !element.checked
+      // console.log({ element })
     } else {
       dispatch(removeRow(index))
     }
@@ -21,8 +23,8 @@ export function RowOfValues({ index, element }) {
 
   return (
     <div className={style.listOfVariables}>
-      <input type="checkbox" onClick={onClickRow} defaultChecked={checkAllRows ? checkAllRows.checked : false} />
-      {element.split(' ').map((el) => (<SingleValue key={crypto.randomUUID()} variable={el} />))}
+      <input type="checkbox" onClick={onClickRow} defaultChecked={element.checked} />
+      {element.element.split(' ').map((el) => (<SingleValue key={crypto.randomUUID()} variable={el} />))}
     </div>
   )
 }

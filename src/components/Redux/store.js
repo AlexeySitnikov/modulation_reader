@@ -4,7 +4,8 @@ import { columnCheckedReducer } from './Slices/columnCheckSlice/columnCheckSlice
 
 export const store = configureStore({
   reducer: {
-    rowsChecked: rowsCheckedReducer,
+    rows: rowsCheckedReducer,
+    // rowsChecked: rowsCheckedReducer,
     columnChecked: columnCheckedReducer,
   },
 })

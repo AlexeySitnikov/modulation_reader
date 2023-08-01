@@ -19,7 +19,19 @@ function App() {
           .map((el) => el.replace(/\s\s+/g, ' '))
         setListOfVariables(arrayOfStrings)
       }
+      console.log(arrayOfStrings)
     }
+  }
+
+  if (!listOfvariables) {
+    return (
+      <>
+        <input type="file" onChange={clickHandlerFileChange} />
+        <div>
+          no data
+        </div>
+      </>
+    )
   }
 
   return (
