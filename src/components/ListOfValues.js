@@ -29,7 +29,6 @@ export function ListOfValues({ listOfvariables }) {
 
   const onClickCheckAllColumns = (e) => {
     e.stopPropagation()
-    alert('click')
   }
 
   const onDeleteButtonHandler = (e) => {
