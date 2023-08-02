@@ -9,7 +9,7 @@ export function RowOfValues({ element }) {
   const onClickRow = (e) => {
     e.stopPropagation()
     if (e.target.checked) {
-      dispatch(addRow({ element }))
+      dispatch(addRow(element))
     } else {
       dispatch(removeRow(element))
     }
