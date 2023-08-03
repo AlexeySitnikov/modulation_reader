@@ -37,6 +37,49 @@ export function ListOfValues({ listOfvariables }) {
     dispatch(deleteUncheckedRows(rows))
   }
 
+  function download(data, filename) {
+    const file = new Blob((data), { type: 'text/plain' })
+    const a = document.createElement('a')
+    const url = URL.createObjectURL(file)
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    setTimeout(() => {
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+    }, 0)
+    // if (window.navigator.msSaveOrOpenBlob) { // IE10+
+    //   window.navigator.msSaveOrOpenBlob(file, filename)
+    // } else { // Others
+    //   const a = document.createElement('a')
+    //   const url = URL.createObjectURL(file)
+    //   a.href = url
+    //   a.download = filename
+    //   document.body.appendChild(a)
+    //   a.click()
+    //   setTimeout(() => {
+    //     document.body.removeChild(a)
+    //     window.URL.revokeObjectURL(url)
+    //   }, 0)
+    // }
+  }
+
+  const makeModulationColumn = () => {
+    const modulation = rows.map((el, index) => `m${index + 1}="${el.element.split(' ')[5]}"\n`)
+    download(modulation, 'm.txt')
+  }
+
+  const makeRColumn = () => {
+    const R_0 = rows.map((el, index) => `R${index + 1}="${el.element.split(' ')[7]}"\n`)
+    download(R_0, 'R.txt')
+  }
+
+  const makeZColumn = () => {
+    const R_0 = rows.map((el, index) => `Z${index + 1}="${el.element.split(' ')[22]}"\n`)
+    download(R_0, 'Z.txt')
+  }
+
   if (!rows) {
     return (
       <div>
@@ -56,6 +99,32 @@ export function ListOfValues({ listOfvariables }) {
       <div>
         <input type="checkbox" id="checkAllColumns" onClick={onClickCheckAllColumns} />
         <span>Check all columns</span>
+      </div>
+      <div>
+        <button
+          type="button"
+          onClick={() => {
+            makeModulationColumn()
+          }}
+        >
+          Download m
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            makeRColumn()
+          }}
+        >
+          Download R
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            makeZColumn()
+          }}
+        >
+          Download Z
+        </button>
       </div>
       <RowsOfValues rows={rows} />
     </div>

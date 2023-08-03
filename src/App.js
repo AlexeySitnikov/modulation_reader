@@ -23,15 +23,6 @@ function App() {
     }
   }
 
-  const onSaveFileButtonHandler = () => {
-    const massiv = ['efim360.ru', 'помог', 'мне', 'решить', 'задачу']
-    const blob = new Blob([JSON.stringify(massiv)], { type: 'text/plain' })
-    const link = document.createElement('a')
-    link.setAttribute('href', URL.createObjectURL(blob))
-    link.setAttribute('download', 'my-array.txt')
-  }
-  // link.click()
-
   if (!listOfvariables) {
     return (
       <>
@@ -45,7 +36,7 @@ function App() {
 
   return (
     <>
-      <a id="downloadLink" href="#" download="myFile.txt" onClick={onSaveFileButtonHandler}>Download</a>
+      {/* <a id="downloadLink" href="#" onClick={() => { download([1]) }}>Download</a> */}
       <input type="file" onChange={clickHandlerFileChange} />
       <ListOfValues listOfvariables={listOfvariables} />
     </>
