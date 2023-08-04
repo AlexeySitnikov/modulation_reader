@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import style from './styles.module.css'
 import { RowsOfValues } from './RowsOfValues'
 import {
-  addAllRows, deleteUncheckedRows, setCheckedAllRows, setUncheckedAllRows,
+  addAllRows, deleteCheckedRows, setCheckedAllRows, setUncheckedAllRows,
 } from './Redux/Slices/rowCheckSlice/rowCheckSlice'
 
 export function ListOfValues({ listOfvariables }) {
@@ -27,14 +27,14 @@ export function ListOfValues({ listOfvariables }) {
     }
   }
 
-  const onClickCheckAllColumns = (e) => {
-    e.stopPropagation()
-  }
+  // const onClickCheckAllColumns = (e) => {
+  //   e.stopPropagation()
+  // }
 
   const onDeleteButtonHandler = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    dispatch(deleteUncheckedRows(rows))
+    dispatch(deleteCheckedRows(rows))
   }
 
   function download(data, filename) {
@@ -66,18 +66,28 @@ export function ListOfValues({ listOfvariables }) {
   }
 
   const makeModulationColumn = () => {
-    const modulation = rows.map((el, index) => `m${index + 1}="${el.element.split(' ')[5]}"\n`)
+    const modulation = rows.map((el, index) => {
+      if (index === rows.length - 1) {
+        return (`m${index + 1}="${el.element.split(' ')[5]}" ""\nm${index + 2}="${el.element.split(' ')[5]}" ""\n`)
+      }
+      return `m${index + 1}="${el.element.split(' ')[5]}" ""\n`
+    })
     download(modulation, 'm.txt')
   }
 
   const makeRColumn = () => {
-    const R_0 = rows.map((el, index) => `R${index + 1}="${el.element.split(' ')[7]}"\n`)
+    const R_0 = rows.map((el, index) => {
+      if (index === rows.length - 1) {
+        return (`R${index + 1}="${el.element.split(' ')[7]}" ""\nR${index + 2}="${el.element.split(' ')[7]}" ""\n`)
+      }
+      return `R${index + 1}="${el.element.split(' ')[7]}" ""\n`
+    })
     download(R_0, 'R.txt')
   }
 
   const makeZColumn = () => {
-    const R_0 = rows.map((el, index) => `Z${index + 1}="${el.element.split(' ')[22]}"\n`)
-    download(R_0, 'Z.txt')
+    const Z = rows.map((el, index) => `Z${index + 1}="${el.element.split(' ')[22]}" ""\n`)
+    download(Z, 'Z.txt')
   }
 
   if (!rows) {
@@ -90,16 +100,16 @@ export function ListOfValues({ listOfvariables }) {
   return (
     <div className={style.column}>
       <div>
-        <button type="button" onClick={onDeleteButtonHandler}>Delete unchecked</button>
+        <button type="button" onClick={onDeleteButtonHandler}>Delete checked</button>
       </div>
       <div>
         <input type="checkbox" id="checkAllRows" onClick={onClickCheckAllRows} />
         <span>Check all rows</span>
       </div>
-      <div>
+      {/* <div>
         <input type="checkbox" id="checkAllColumns" onClick={onClickCheckAllColumns} />
         <span>Check all columns</span>
-      </div>
+      </div> */}
       <div>
         <button
           type="button"

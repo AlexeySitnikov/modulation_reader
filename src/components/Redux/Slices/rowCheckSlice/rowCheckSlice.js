@@ -31,9 +31,9 @@ export const checkRowSlice = createSlice({
       })
     },
 
-    deleteUncheckedRows(state, action) {
+    deleteCheckedRows(state, action) {
       action.payload.forEach((el) => {
-        if (!el.checked) {
+        if (el.checked) {
           const currentElement = state.find((element) => (element.id === el.id))
           if (currentElement) {
             const currentIndex = state.indexOf(currentElement)
@@ -69,8 +69,8 @@ export const checkRowSlice = createSlice({
 })
 
 export const {
-  addRow, removeRow, removeAllRows, getRows, addAllRows, setCheckedAllRows, setUncheckedAllRows,
-  deleteUncheckedRows,
+  addRow, removeRow, removeAllRows, addAllRows, setCheckedAllRows, setUncheckedAllRows,
+  deleteCheckedRows,
 } = checkRowSlice.actions
 
 export const rowsCheckedReducer = checkRowSlice.reducer
