@@ -7,6 +7,7 @@ import { RowsOfValues } from './RowsOfValues'
 import {
   addAllRows, deleteCheckedRows, setCheckedAllRows, setUncheckedAllRows,
 } from './Redux/Slices/rowCheckSlice/rowCheckSlice'
+import { getTip } from './getTip'
 
 export function ListOfValues({ listOfvariables }) {
   const dispatch = useDispatch()
@@ -30,17 +31,13 @@ export function ListOfValues({ listOfvariables }) {
     }
   }
 
-  // const onClickCheckAllColumns = (e) => {
-  //   e.stopPropagation()
-  // }
-
   const onDeleteButtonHandler = (e) => {
     e.preventDefault()
     e.stopPropagation()
     dispatch(deleteCheckedRows(rows))
   }
 
-  function download(data, filename) {
+  async function download(data, filename) {
     const file = new Blob((data), { type: 'text/plain' })
     const a = document.createElement('a')
     const url = URL.createObjectURL(file)
@@ -93,7 +90,9 @@ export function ListOfValues({ listOfvariables }) {
     download(Z, 'Z.txt')
   }
 
-  const makeVaneModulation = () => {
+  const getHowManyDigits = (number) => (number.toString().length - 2)
+
+  const makeVaneVerticalModulation = () => {
     const modulation = rows.map((el) => Number(el.element.split(' ')[5]))
     modulation.push(modulation[modulation.length - 1])
 
@@ -102,12 +101,12 @@ export function ListOfValues({ listOfvariables }) {
 
     const Z = rows.map((el) => Number(el.element.split(' ')[22]))
 
-    const step = 0.1
+    const step = 0.5
     let z_coor = 0
     let t = 0.0
     let tip = 0n
-    const f = []
     let n = 1
+    const vertical = []
 
     while (t <= Z[0]) {
       tip = ((R_0[0]
@@ -119,55 +118,146 @@ export function ListOfValues({ listOfvariables }) {
       + 0.5 * (modulation[0] - modulation[1])
       * (Math.cos(Math.PI * (t / Z[0])) + 1) * Math.cos(Math.PI * (t / Z[0])))))
 
-      f.push(`${Number.parseFloat(z_coor).toFixed(2)}\t${Number.parseFloat(tip).toFixed(5)}\n`)
+      vertical.push(`${Number.parseFloat(z_coor / 1)
+        .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
 
-      t = Math.round(step * n * 100) / 100
-      if (t <= Z[0]) {
-        z_coor = Math.round(step * n * 100) / 100
-        n += 1
-      }
+      t = Math.round(step * n * 100000) / 100000
+      z_coor = Math.round(step * n * 100000) / 100000
+      n += 1
     }
 
-    for (let i = 0; i < Z.length; i += 1) {
+    for (let i = 0; i < Z.length - 1; i += 1) {
       let n1 = 1
+      const t_zero = Math.round((z_coor - Z[i]) * 100000) / 100000
+      t = Math.round((z_coor - Z[i]) * 100000) / 100000
       if ((i % 2) === 0) {
-        t = Math.round((Math.round((Z[i + 1] - Z[i]) * 100) / 100 - Math.round(t * 100) / 100) * 100 / 100)
-        while (t <= Math.round((Z[i + 1] - Z[i]) * 100) / 100) {
-          tip = (R_0[i + 1] + ((t / (Z[i + 1] - Z[i])) * (R_0[i + 2] - R_0[i + 1])))
-          * (1
-            + ((0.5 * (modulation[i + 1] + modulation[i + 2]) + 0.5 * (modulation[i + 1] - modulation[i + 2]) * Math.cos(Math.PI * t / (Z[i + 1] - Z[i])) - 1) / (0.5 * (modulation[i + 1] + modulation[i + 2]) + 0.5 * (modulation[i + 1] - modulation[i + 2]) * Math.cos(Math.PI * t / (Z[i + 1] - Z[i])) + 1)
-            ) * (Math.cos(Math.PI * t / (Z[i + 1] - Z[i]))))
+        while (t <= Math.round((Z[i + 1] - Z[i]) * 100000) / 100000) {
+          tip = getTip({
+            t,
+            Z_start: Z[i],
+            Z_end: Z[i + 1],
+            R0_start: R_0[i + 1],
+            R0_end: R_0[i + 2],
+            m_start: modulation[i + 1],
+            m_end: modulation[i + 2],
+            koef: 1,
+          })
 
-          f.push(`${Number.parseFloat(z_coor).toFixed(2)}\t${Number.parseFloat(tip).toFixed(5)}\n`)
-          t = Math.round(step * n1 * 100) / 100
+          vertical.push(`${Number.parseFloat(z_coor / 1)
+            .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
+          t = Math.round((t_zero + (step * n1)) * 100) / 100
 
-          if (t <= Math.round((Z[i + 1] - Z[i]) * 100) / 100) {
-            z_coor = Math.round(step * n * 100) / 100
-            n += 1
-            n1 += 1
-          }
+          z_coor = Math.round(step * n * 100000) / 100000
+          n += 1
+          n1 += 1
         }
       } else {
-        t = Math.round((Z[i + 1] - Z[i]) * 100) / 100 - Math.round(t * 100) / 100
-        while (t <= Math.round((Z[i + 1] - Z[i]) * 100) / 100) {
-          tip = (R_0[i + 1] + ((t / (Z[i + 1] - Z[i])) * (R_0[i + 2] - R_0[i + 1])))
-          * (1
-            - ((0.5 * (modulation[i + 1] + modulation[i + 2]) + 0.5 * (modulation[i + 1] - modulation[i + 2]) * Math.cos(Math.PI * t / (Z[i + 1] - Z[i])) - 1) / (0.5 * (modulation[i + 1] + modulation[i + 2]) + 0.5 * (modulation[i + 1] - modulation[i + 2]) * Math.cos(Math.PI * t / (Z[i + 1] - Z[i])) + 1)
-            ) * (Math.cos(Math.PI * t / (Z[i + 1] - Z[i]))))
+        while (t <= Math.round((Z[i + 1] - Z[i]) * 100000) / 100000) {
+          tip = getTip({
+            t,
+            Z_start: Z[i],
+            Z_end: Z[i + 1],
+            R0_start: R_0[i + 1],
+            R0_end: R_0[i + 2],
+            m_start: modulation[i + 1],
+            m_end: modulation[i + 2],
+            koef: -1,
+          })
 
-          f.push(`${Number.parseFloat(z_coor).toFixed(2)}\t${Number.parseFloat(tip).toFixed(5)}\n`)
-          t = Math.round(step * n1 * 100) / 100
-          if (t <= Math.round((Z[i + 1] - Z[i]) * 100) / 100) {
-            z_coor = Math.round(step * n * 100) / 100
-            n += 1
-            n1 += 1
-          }
+          vertical.push(`${Number.parseFloat(z_coor / 1)
+            .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
+          t = Math.round((t_zero + (step * n1)) * 100000) / 100000
+          z_coor = Math.round(step * n * 100000) / 100000
+          n += 1
+          n1 += 1
         }
       }
     }
-    // console.log({ Z })
-    // console.log({ f })
-    download(f, 'f.txt')
+    download(vertical, 'vertical.txt')
+  }
+
+  const makeVaneHorizontalModulation = () => {
+    const modulation = rows.map((el) => Number(el.element.split(' ')[5]))
+    modulation.push(modulation[modulation.length - 1])
+
+    const R_0 = rows.map((el) => Number(el.element.split(' ')[7]))
+    R_0.push(R_0[R_0.length - 1])
+
+    const Z = rows.map((el) => Number(el.element.split(' ')[22]))
+
+    const step = 0.5
+    let z_coor = 0
+    let t = 0.0
+    let tip = 0n
+    let n = 1
+    const horizontal = []
+
+    while (t <= Z[0]) {
+      tip = ((R_0[0]
+        + (t / Z[0]) * (R_0[1] - R_0[0]))
+      * (1 + (0.5 * (modulation[0] + modulation[1])
+      + 0.5 * (modulation[0] - modulation[1])
+      * Math.cos(Math.PI * (t / Z[0])) - 1)
+      / (0.5 * (modulation[0] + modulation[1])
+      + 0.5 * (modulation[0] - modulation[1])
+      * (Math.cos(Math.PI * (t / Z[0])) + 1) * Math.cos(Math.PI * (t / Z[0])))))
+
+      horizontal.push(`${Number.parseFloat(z_coor / 1)
+        .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
+
+      t = Math.round(step * n * 100000) / 100000
+      z_coor = Math.round(step * n * 100000) / 100000
+      n += 1
+    }
+
+    for (let i = 0; i < Z.length - 1; i += 1) {
+      let n1 = 1
+      const t_zero = Math.round((z_coor - Z[i]) * 100000) / 100000
+      t = Math.round((z_coor - Z[i]) * 100000) / 100000
+      if ((i % 2) === 0) {
+        while (t <= Math.round((Z[i + 1] - Z[i]) * 100000) / 100000) {
+          tip = getTip({
+            t,
+            Z_start: Z[i],
+            Z_end: Z[i + 1],
+            R0_start: R_0[i + 1],
+            R0_end: R_0[i + 2],
+            m_start: modulation[i + 1],
+            m_end: modulation[i + 2],
+            koef: -1,
+          })
+
+          horizontal.push(`${Number.parseFloat(z_coor / 1)
+            .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
+          t = Math.round((t_zero + (step * n1)) * 100) / 100
+
+          z_coor = Math.round(step * n * 100000) / 100000
+          n += 1
+          n1 += 1
+        }
+      } else {
+        while (t <= Math.round((Z[i + 1] - Z[i]) * 100000) / 100000) {
+          tip = getTip({
+            t,
+            Z_start: Z[i],
+            Z_end: Z[i + 1],
+            R0_start: R_0[i + 1],
+            R0_end: R_0[i + 2],
+            m_start: modulation[i + 1],
+            m_end: modulation[i + 2],
+            koef: 1,
+          })
+
+          horizontal.push(`${Number.parseFloat(z_coor / 1)
+            .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
+          t = Math.round((t_zero + (step * n1)) * 100000) / 100000
+          z_coor = Math.round(step * n * 100000) / 100000
+          n += 1
+          n1 += 1
+        }
+      }
+    }
+    download(horizontal, 'horizontal.txt')
   }
 
   if (!rows) {
@@ -218,10 +308,18 @@ export function ListOfValues({ listOfvariables }) {
         <button
           type="button"
           onClick={() => {
-            makeVaneModulation()
+            makeVaneVerticalModulation()
           }}
         >
-          Make vane modulation
+          Make vane vertical modulation
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            makeVaneHorizontalModulation()
+          }}
+        >
+          Make vane horizontal modulation
         </button>
       </div>
       <RowsOfValues rows={rows} />
