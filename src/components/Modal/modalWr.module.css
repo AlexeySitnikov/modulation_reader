@@ -1,0 +1,22 @@
+.modalWr{
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent{
+  width: 25%;
+  height: 25%;
+  background-color: aliceblue;
+  border-radius: 15%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}

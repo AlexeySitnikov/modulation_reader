@@ -2,14 +2,18 @@
 /* eslint-disable no-mixed-operators */
 /* eslint-disable max-len */
 import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import style from './styles.module.css'
 import { RowsOfValues } from './RowsOfValues'
 import {
   addAllRows, deleteCheckedRows, setCheckedAllRows, setUncheckedAllRows,
 } from './Redux/Slices/rowCheckSlice/rowCheckSlice'
 import { getTip } from './getTip'
+import { Modal } from './Modal/Modal'
+import { Form } from './Form/Form'
 
 export function ListOfValues({ listOfvariables }) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const dispatch = useDispatch()
   const preparedRows = (listOfvariables.filter((el) => el.length > 0).map((element, index) => (
     {
@@ -260,6 +264,13 @@ export function ListOfValues({ listOfvariables }) {
     download(horizontal, 'horizontal.txt')
   }
 
+  const openModalClickHandler = () => {
+    setIsModalOpen(true)
+  }
+  const closeModalClickHandler = () => {
+    setIsModalOpen(false)
+  }
+
   if (!rows) {
     return (
       <div>
@@ -321,6 +332,18 @@ export function ListOfValues({ listOfvariables }) {
         >
           Make vane horizontal modulation
         </button>
+
+        <button
+          type="button"
+          onClick={openModalClickHandler}
+        >
+          Open Modal
+        </button>
+
+        <Modal isOpen={isModalOpen} closeModal={closeModalClickHandler}>
+          <Form />
+        </Modal>
+
       </div>
       <RowsOfValues rows={rows} />
     </div>
