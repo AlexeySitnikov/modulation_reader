@@ -1,10 +1,12 @@
 import { Dimension } from './Dimension'
+import { useModulationContext } from '../Contexts/ModulationContext'
 
 export function SetDimension() {
   const dimensionArray = ['mm', 'cm', 'm']
+  const { dimension } = useModulationContext()
 
   return (
-    <select>
+    <select defaultValue={dimension}>
       {dimensionArray.map((el) => (
         <Dimension dimension={el} key={crypto.randomUUID()} />
       ))}
