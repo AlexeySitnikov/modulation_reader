@@ -37,7 +37,7 @@ function App() {
   return (
     <>
       {/* <a id="downloadLink" href="#" onClick={() => { download([1]) }}>Download</a> */}
-      <input type="file" onChange={clickHandlerFileChange} />
+      {/* <input type="file" onChange={clickHandlerFileChange} /> */}
       <ListOfValues listOfvariables={listOfvariables} />
     </>
   )

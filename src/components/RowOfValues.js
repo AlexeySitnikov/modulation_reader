@@ -18,7 +18,12 @@ export function RowOfValues({ element }) {
   return (
     <div className={style.listOfVariables}>
       <input type="checkbox" onClick={onClickRow} defaultChecked={element.checked} />
-      {element.element.split(' ').map((el) => (<SingleValue key={crypto.randomUUID()} variable={el} />))}
+      {element.element.split(' ').map((el) => (
+        <SingleValue
+          key={crypto.randomUUID()}
+          variable={el}
+        />
+      ))}
     </div>
   )
 }

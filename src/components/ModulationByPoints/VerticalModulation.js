@@ -1,5 +1,6 @@
 import { Download } from '../Dowload/Download'
 import { getHowManyDigits } from '../constrains/getHowManyDigits'
+import { getSign } from '../constrains/getSign'
 import { getTip } from '../constrains/getTip'
 
 export function VerticalModulation({ rows, step }) {
@@ -82,6 +83,23 @@ export function VerticalModulation({ rows, step }) {
         n1 += 1
       }
     }
+  }
+  n -= 2
+  zCoordinate = Math.round(step * n * 100000) / 100000
+  t = Z[Z.length - 1] - Z[Z.length - 2]
+  if (Z[Z.length - 1] > zCoordinate) {
+    tip = getTip({
+      t,
+      Z_start: Z[Z.length - 2],
+      Z_end: Z[Z.length - 2 + 1],
+      R0_start: R_0[Z.length - 2 + 1],
+      R0_end: R_0[Z.length - 2 + 2],
+      m_start: modulation[Z.length - 2 + 1],
+      m_end: modulation[Z.length - 2 + 2],
+      koef: -getSign(Z.length - 2),
+    })
+    vertical.push(`${Number.parseFloat(Z[Z.length - 1] / 1)
+      .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
   }
   Download(vertical, 'vertical.txt')
 }
