@@ -1,11 +1,11 @@
-import { ModulationContextProvider } from '../Contexts/ModulationContext'
+import { ModulationContextProvider } from '../Contexts/ModulationByPointsContext'
 import { GetHorizontalModulation } from './GetHorizontalModulation'
 import { GetVerticalModulation } from './GetVerticalModulation'
 import { SetDimension } from './SetDimension'
 import { SetStep } from './SetStep'
 import style from './form.module.css'
 
-export function Form({ rows }) {
+export function GetModulationByPoints({ rows }) {
   return (
     <ModulationContextProvider>
       <div className={style.formWrapper}>

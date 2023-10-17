@@ -1,5 +1,5 @@
 import { VerticalModulation } from '../ModulationByPoints/VerticalModulation'
-import { useModulationContext } from '../Contexts/ModulationContext'
+import { useModulationContext } from '../Contexts/ModulationByPointsContext'
 
 export function GetVerticalModulation({ rows }) {
   const { step, dimension } = useModulationContext()

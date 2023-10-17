@@ -26,7 +26,7 @@ function ModalContent({ children, closeModal }) {
   )
 }
 
-export function Modal({ children, isOpen, closeModal }) {
+export function Modal({ isOpen, closeModal, children }) {
   if (!isOpen) return null
 
   return (

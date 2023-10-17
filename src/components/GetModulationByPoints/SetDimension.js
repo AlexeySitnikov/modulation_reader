@@ -1,5 +1,5 @@
 import { Dimension } from './Dimension'
-import { useModulationContext } from '../Contexts/ModulationContext'
+import { useModulationContext } from '../Contexts/ModulationByPointsContext'
 
 export function SetDimension() {
   const dimensionArray = ['mm', 'cm', 'm']
