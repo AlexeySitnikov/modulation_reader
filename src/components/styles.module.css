@@ -25,4 +25,7 @@ display: flex;
 .column{
   display: flex;
   flex-direction: column;
+  background: radial-gradient(circle, skyblue, steelblue);
+  min-height: 100vh;
 }
+

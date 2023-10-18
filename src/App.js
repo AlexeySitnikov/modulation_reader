@@ -1,10 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from 'react'
-import './App.css'
+import { useRef, useState } from 'react'
+import style from './style.module.css'
 import { ListOfValues } from './components/ListOfValues'
+import filePickerLogo from './Pics/1.png'
 
 function App() {
-  const [listOfvariables, setListOfVariables] = useState()
+  const pickerRef = useRef(null)
+  const [listOfvariables, setListOfVariables] = useState([])
+  const [file, setFile] = useState(null)
 
   let arrayOfStrings = []
 
@@ -20,17 +23,24 @@ function App() {
           .map((el) => el.replace(/\s\s+/g, ' '))
         setListOfVariables(arrayOfStrings)
       }
+      setFile(e.target.files[0])
     }
+    console.log(file)
+  }
+
+  const pickFileHandler = () => {
+    pickerRef.current.click()
   }
 
   if (!listOfvariables) {
     return (
-      <>
-        <input type="file" onChange={clickHandlerFileChange} />
-        <div>
-          no data
-        </div>
-      </>
+      <div className={style.wrapper}>
+        <button type="button" onClick={pickFileHandler}>
+          <img className={style.filePicker} src={filePickerLogo} alt="filePickerLogo" />
+        </button>
+        <input type="file" onChange={clickHandlerFileChange} ref={pickerRef} className={style.hiddenInput} />
+
+      </div>
     )
   }
 

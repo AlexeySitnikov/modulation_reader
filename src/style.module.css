@@ -1,0 +1,26 @@
+.noData{
+  font-size: large;
+  color: brown;
+}
+
+.wrapper{
+  background: radial-gradient(circle, skyblue, steelblue);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.hiddenInput{
+  opacity: 0;
+  line-height: 0;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+.filePicker{
+  width: 50px;
+}
