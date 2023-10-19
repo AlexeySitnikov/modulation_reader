@@ -4,7 +4,7 @@ const ModulationByPointsContext = React.createContext()
 const ModulationByPointsContextChangeValue = React.createContext()
 
 export function ModulationContextProvider({ children }) {
-  const [step, setStep] = useState(0.5)
+  const [step, setStep] = useState(0.25)
   const [dimension, setDimension] = useState('mm')
 
   const modulationParametersValue = useMemo(() => ({

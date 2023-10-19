@@ -1,8 +1,3 @@
-.noData{
-  font-size: large;
-  color: brown;
-}
-
 .wrapper{
   background: radial-gradient(circle, skyblue, steelblue);
   min-height: 100vh;

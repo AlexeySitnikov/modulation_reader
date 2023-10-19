@@ -1,7 +1,7 @@
 import { GetM } from './GetM'
 import { GetR0 } from './GetR0'
 import { GetZ } from './GetZ'
-import style from './form.module.css'
+import style from './style.module.css'
 
 export function GetModulationForCST({ rows }) {
   return (

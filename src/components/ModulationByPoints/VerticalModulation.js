@@ -1,9 +1,10 @@
 import { Download } from '../Dowload/Download'
+import { getDimension } from '../constrains/getDimension'
 import { getHowManyDigits } from '../constrains/getHowManyDigits'
 import { getSign } from '../constrains/getSign'
 import { getTip } from '../constrains/getTip'
 
-export function VerticalModulation({ rows, step }) {
+export function VerticalModulation({ rows, step, dimension }) {
   const modulation = rows.map((el) => Number(el.element.split(' ')[5]))
   modulation.push(modulation[modulation.length - 1])
 
@@ -29,8 +30,8 @@ export function VerticalModulation({ rows, step }) {
       + 0.5 * (modulation[0] - modulation[1])
       * (Math.cos(Math.PI * (t / Z[0])) + 1) * Math.cos(Math.PI * (t / Z[0])))))
 
-    vertical.push(`${Number.parseFloat(zCoordinate / 1)
-      .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
+    vertical.push(`${Number.parseFloat(zCoordinate / getDimension(dimension))
+      .toFixed(getHowManyDigits(step / getDimension(dimension)))}\t${Number.parseFloat(tip / getDimension(dimension)).toFixed(8)}\n`)
 
     t = Math.round(step * n * 100000) / 100000
     zCoordinate = Math.round(step * n * 100000) / 100000
@@ -54,8 +55,8 @@ export function VerticalModulation({ rows, step }) {
           koef: 1,
         })
 
-        vertical.push(`${Number.parseFloat(zCoordinate / 1)
-          .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
+        vertical.push(`${Number.parseFloat(zCoordinate / getDimension(dimension))
+          .toFixed(getHowManyDigits(step / getDimension(dimension)))}\t${Number.parseFloat(tip / getDimension(dimension)).toFixed(8)}\n`)
         t = Math.round((tZero + (step * n1)) * 100) / 100
 
         zCoordinate = Math.round(step * n * 100000) / 100000
@@ -75,8 +76,8 @@ export function VerticalModulation({ rows, step }) {
           koef: -1,
         })
 
-        vertical.push(`${Number.parseFloat(zCoordinate / 1)
-          .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
+        vertical.push(`${Number.parseFloat(zCoordinate / getDimension(dimension))
+          .toFixed(getHowManyDigits(step / getDimension(dimension)))}\t${Number.parseFloat(tip / getDimension(dimension)).toFixed(8)}\n`)
         t = Math.round((tZero + (step * n1)) * 100000) / 100000
         zCoordinate = Math.round(step * n * 100000) / 100000
         n += 1
@@ -98,8 +99,8 @@ export function VerticalModulation({ rows, step }) {
       m_end: modulation[Z.length - 2 + 2],
       koef: -getSign(Z.length - 2),
     })
-    vertical.push(`${Number.parseFloat(Z[Z.length - 1] / 1)
-      .toFixed(getHowManyDigits(step))}\t${Number.parseFloat(tip / 1).toFixed(8)}\n`)
+    vertical.push(`${Number.parseFloat(Z[Z.length - 1] / getDimension(dimension))
+      .toFixed(getHowManyDigits(step / getDimension(dimension)))}\t${Number.parseFloat(tip / getDimension(dimension)).toFixed(8)}\n`)
   }
   Download(vertical, 'vertical.txt')
 }

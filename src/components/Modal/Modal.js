@@ -19,7 +19,7 @@ function ModalContent({ children, closeModal }) {
   return (
     <div className={style.modalContent}>
       {children}
-      <button type="button" onClick={closeModal}>
+      <button className={style.button} type="button" onClick={closeModal}>
         Close Modal
       </button>
     </div>

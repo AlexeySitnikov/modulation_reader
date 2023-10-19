@@ -1,8 +1,9 @@
 import { useRef } from 'react'
 import { useModulationContext, useModulationContextChangeValue } from '../Contexts/ModulationByPointsContext'
+import style from './style.module.css'
 
 export function SetStep() {
-  const { step } = useModulationContext()
+  const { step, dimension } = useModulationContext()
   const { setStep } = useModulationContextChangeValue()
   const inputRef = useRef(null)
 
@@ -12,9 +13,9 @@ export function SetStep() {
 
   return (
     <>
-      <input ref={inputRef} value={step} onChange={onClickHandler} />
-      <button type="button" onClick={onClickHandler}>
-        {`Set step.Current step is ${step}`}
+      <input className={style.input} type="number" min={0} step={0.01} onChange={onClickHandler} value={step} ref={inputRef} lang="en-US" />
+      <button className={style.button} type="button">
+        {`Current step is ${step} ${dimension}`}
       </button>
     </>
   )

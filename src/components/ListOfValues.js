@@ -61,18 +61,18 @@ export function ListOfValues({ listOfvariables }) {
   return (
     <div className={style.column}>
       <div>
-        <button type="button" onClick={onDeleteButtonHandler}>Delete checked</button>
+        <button className={style.button} type="button" onClick={onDeleteButtonHandler}>Delete checked</button>
       </div>
       <div>
         <input type="checkbox" id="checkAllRows" onClick={onClickCheckAllRows} />
         <span>Check all rows</span>
       </div>
       <div>
-        <button type="button" onClick={openModalClickHandler} id="CST">
+        <button className={style.button} type="button" onClick={openModalClickHandler} id="CST">
           Get modulation for CST
         </button>
 
-        <button type="button" onClick={openModalClickHandler} id="points">
+        <button className={style.button} type="button" onClick={openModalClickHandler} id="points">
           Get modulation by points
         </button>
 

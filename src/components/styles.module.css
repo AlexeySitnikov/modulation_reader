@@ -29,3 +29,20 @@ display: flex;
   min-height: 100vh;
 }
 
+.button{
+  margin-left: 4px;
+  margin-top: 4px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 15px;
+  color: #fff;
+  background-color: rgb(0, 78, 154, 1);
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  padding: 15px;
+}
+
+.button:hover{
+  color: #f6980c;
+  transition: background-color 0.3s ease-in;
+}

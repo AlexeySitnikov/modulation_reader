@@ -1,53 +1,36 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { useRef, useState } from 'react'
-import style from './style.module.css'
+import { useEffect, useState } from 'react'
 import { ListOfValues } from './components/ListOfValues'
-import filePickerLogo from './Pics/1.png'
+import { DownloadFile } from './components/DownloadFile/DownloadFile'
 
 function App() {
-  const pickerRef = useRef(null)
   const [listOfvariables, setListOfVariables] = useState([])
-  const [file, setFile] = useState(null)
+  const [selectedFile, setSelectedFile] = useState(null)
 
-  let arrayOfStrings = []
-
-  const clickHandlerFileChange = (e) => {
-    if (e.target.files[0]) {
+  useEffect(() => {
+    let arrayOfStrings = []
+    if (selectedFile) {
       const reader = new FileReader()
-      reader.readAsText(e.target.files[0])
+      reader.readAsText(selectedFile)
       reader.onload = () => {
         arrayOfStrings = reader.result
           .replace(/[-]/g, '')
           .split('\n')
           .map((el) => el.trim())
           .map((el) => el.replace(/\s\s+/g, ' '))
-        setListOfVariables(arrayOfStrings)
+        setListOfVariables([...arrayOfStrings])
       }
-      setFile(e.target.files[0])
     }
-    console.log(file)
-  }
+  }, [selectedFile])
 
-  const pickFileHandler = () => {
-    pickerRef.current.click()
-  }
-
-  if (!listOfvariables) {
+  if (listOfvariables.length === 0) {
     return (
-      <div className={style.wrapper}>
-        <button type="button" onClick={pickFileHandler}>
-          <img className={style.filePicker} src={filePickerLogo} alt="filePickerLogo" />
-        </button>
-        <input type="file" onChange={clickHandlerFileChange} ref={pickerRef} className={style.hiddenInput} />
-
-      </div>
+      <DownloadFile setSelectedFile={setSelectedFile} />
     )
   }
 
   return (
     <>
-      {/* <a id="downloadLink" href="#" onClick={() => { download([1]) }}>Download</a> */}
-      {/* <input type="file" onChange={clickHandlerFileChange} /> */}
+      {/* <DownloadFile setSelectedFile={setSelectedFile} /> */}
       <ListOfValues listOfvariables={listOfvariables} />
     </>
   )

@@ -3,7 +3,7 @@ import { GetHorizontalModulation } from './GetHorizontalModulation'
 import { GetVerticalModulation } from './GetVerticalModulation'
 import { SetDimension } from './SetDimension'
 import { SetStep } from './SetStep'
-import style from './form.module.css'
+import style from './style.module.css'
 
 export function GetModulationByPoints({ rows }) {
   return (
