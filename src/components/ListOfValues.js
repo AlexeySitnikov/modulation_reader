@@ -60,14 +60,15 @@ export function ListOfValues({ listOfvariables }) {
   }
   return (
     <div className={style.column}>
-      <div>
+      <div className={style.deleteButton}>
+        <div>
+          <input type="checkbox" id="checkAllRows" onClick={onClickCheckAllRows} />
+          <span>Check all rows</span>
+        </div>
         <button className={style.button} type="button" onClick={onDeleteButtonHandler}>Delete checked</button>
       </div>
-      <div>
-        <input type="checkbox" id="checkAllRows" onClick={onClickCheckAllRows} />
-        <span>Check all rows</span>
-      </div>
-      <div>
+
+      <div className={style.openModalsButton}>
         <button className={style.button} type="button" onClick={openModalClickHandler} id="CST">
           Get modulation for CST
         </button>
@@ -79,9 +80,11 @@ export function ListOfValues({ listOfvariables }) {
         <Modal isOpen={isModalOpen} closeModal={closeModalClickHandler}>
           {content}
         </Modal>
-
       </div>
-      <RowsOfValues rows={rows} />
+      <br />
+      <div className={style.data}>
+        <RowsOfValues rows={rows} />
+      </div>
     </div>
   )
 }

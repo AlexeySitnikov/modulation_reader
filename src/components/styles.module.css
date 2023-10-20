@@ -46,3 +46,20 @@ display: flex;
   color: #f6980c;
   transition: background-color 0.3s ease-in;
 }
+
+.deleteButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.openModalsButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.data{
+  display: flex;
+  justify-content: center;
+}

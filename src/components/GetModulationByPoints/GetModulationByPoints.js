@@ -9,10 +9,14 @@ export function GetModulationByPoints({ rows }) {
   return (
     <ModulationContextProvider>
       <div className={style.formWrapper}>
-        <SetStep />
-        <SetDimension />
-        <GetVerticalModulation rows={rows} />
-        <GetHorizontalModulation rows={rows} />
+        <div>
+          <SetStep />
+          <SetDimension />
+        </div>
+        <div>
+          <GetVerticalModulation rows={rows} />
+          <GetHorizontalModulation rows={rows} />
+        </div>
       </div>
     </ModulationContextProvider>
   )

@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom'
 import { useEffect } from 'react'
-import style from './modalWr.module.css'
+import style from './style.module.css'
 
 function ModalContent({ children, closeModal }) {
   useEffect(() => {
@@ -17,11 +17,17 @@ function ModalContent({ children, closeModal }) {
   }, [closeModal])
 
   return (
-    <div className={style.modalContent}>
-      {children}
-      <button className={style.button} type="button" onClick={closeModal}>
-        Close Modal
-      </button>
+    <div className={style.modal}>
+      <div className={style.content}>
+        <div className={style.functionalButtons}>
+          {children}
+        </div>
+        <div className={style.closeButton}>
+          <button className={style.button} type="button" onClick={closeModal}>
+            Close Modal
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
