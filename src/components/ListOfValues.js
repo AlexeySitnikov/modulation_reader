@@ -1,57 +1,80 @@
-import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import style from './styles.module.css'
-import { RowsOfValues } from './RowsOfValues'
-import {
-  addAllRows, deleteCheckedRows, setCheckedAllRows, setUncheckedAllRows,
-} from './Redux/Slices/rowCheckSlice/rowCheckSlice'
 import { Modal } from './Modal/Modal'
 import { GetModulationByPoints } from './GetModulationByPoints/GetModulationByPoints'
 import { GetModulationForCST } from './GetModulationForCST/GetModulationForCST'
+import { ListOfRows } from './ListOfRows/ListOfRows'
 
 export function ListOfValues({ listOfvariables }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [content, setContent] = useState(null)
-  const dispatch = useDispatch()
-  const preparedRows = (listOfvariables.filter((el) => el.length > 0).map((element, index) => (
-    {
-      element,
-      checked: false,
-      id: index,
-    }
-  )))
-  dispatch(addAllRows(preparedRows))
+  const [preparedRows, setPreparedRows] = useState(listOfvariables.filter((el) => el.length > 0)
+    .map((element) => (
+      {
+        element,
+        checked: false,
+        id: crypto.randomUUID(),
+      }
+    )))
 
-  const rows = useSelector((store) => store.rows)
+  const checkRow = (id) => {
+    setPreparedRows((prev) => prev.map((el) => {
+      if (el.id === id) {
+        return {
+          ...el,
+          checked: !el.checked,
+        }
+      }
+      return el
+    }))
+  }
+
+  const deletRow = () => {
+    setPreparedRows((prev) => prev.filter((el) => !el.checked))
+  }
+
+  const checkAllRows = () => {
+    setPreparedRows((prev) => prev.map((el) => ({
+      ...el,
+      checked: true,
+    })))
+  }
+
+  const unCheckAllRows = () => {
+    setPreparedRows((prev) => prev.map((el) => ({
+      ...el,
+      checked: false,
+    })))
+  }
 
   const onClickCheckAllRows = (e) => {
     e.stopPropagation()
     if (e.target.checked) {
-      dispatch(setCheckedAllRows(rows))
+      checkAllRows()
     } else {
-      dispatch(setUncheckedAllRows(rows))
+      unCheckAllRows()
     }
   }
 
   const onDeleteButtonHandler = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    dispatch(deleteCheckedRows(rows))
+    deletRow()
   }
 
   const openModalClickHandler = (e) => {
     e.preventDefault()
     e.stopPropagation()
     setIsModalOpen(true)
-    if (e.target.id === 'CST') { setContent(<GetModulationForCST rows={rows} />) }
-    if (e.target.id === 'points') { setContent(<GetModulationByPoints rows={rows} />) }
+    if (e.target.id === 'CST') { setContent(<GetModulationForCST rows={preparedRows} />) }
+    if (e.target.id === 'points') { setContent(<GetModulationByPoints rows={preparedRows} />) }
   }
 
   const closeModalClickHandler = () => {
     setIsModalOpen(false)
   }
 
-  if (!rows) {
+  if (preparedRows.length === 0) {
     return (
       <div>
         no data
@@ -83,7 +106,8 @@ export function ListOfValues({ listOfvariables }) {
       </div>
       <br />
       <div className={style.data}>
-        <RowsOfValues rows={rows} />
+        {/* <RowsOfValues rows={rows} /> */}
+        <ListOfRows rows={preparedRows} checkRow={checkRow} />
       </div>
     </div>
   )
