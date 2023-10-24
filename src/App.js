@@ -20,6 +20,14 @@ function App() {
           .map((el) => el.replace(/\s\s+/g, ' '))
         setListOfVariables([...arrayOfStrings])
       }
+      // setPreparedRows([...listOfvariables.filter((el) => el.length > 0)
+      //   .map((element) => (
+      //     {
+      //       element,
+      //       checked: false,
+      //       id: crypto.randomUUID(),
+      //     }
+      //   ))])
     }
   }, [selectedFile])
 
@@ -31,7 +39,8 @@ function App() {
           checked: false,
           id: crypto.randomUUID(),
         }
-      ))])
+      )),
+    ])
   }, [listOfvariables])
 
   if (listOfvariables.length === 0) {
