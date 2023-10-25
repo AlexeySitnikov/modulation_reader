@@ -14,7 +14,7 @@ export function DownloadFile({ setSelectedFile }) {
   }
 
   return (
-    <div className={style.wrapper}>
+    <div>
       <button type="button" onClick={pickFileHandler}>
         <img className={style.filePicker} src={filePickerLogo} alt="filePickerLogo" />
       </button>

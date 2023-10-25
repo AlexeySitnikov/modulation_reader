@@ -1,3 +1,6 @@
+import { isGoodModulation } from '../Check/isGoodModulation'
+import { isGoodR0 } from '../Check/isGoodR0'
+import { isGoodZ } from '../Check/isGoodZ'
 import { Download } from '../Dowload/Download'
 import { getDimension } from '../constrains/getDimension'
 import { getHowManyDigits } from '../constrains/getHowManyDigits'
@@ -12,6 +15,12 @@ export function HorizontalModulation({ rows, step, dimension }) {
   R_0.push(R_0[R_0.length - 1])
 
   const Z = rows.map((el) => Number(el.element.split(' ')[22]))
+
+  if (!isGoodModulation(modulation) || !isGoodR0(R_0) || !isGoodZ(Z)) {
+    // eslint-disable-next-line no-alert
+    alert('Bad modulation or R_0 or Z')
+    return
+  }
 
   // const step = 0.5
   let zCoordinate = 0

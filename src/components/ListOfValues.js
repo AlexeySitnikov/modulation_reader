@@ -6,7 +6,7 @@ import { GetModulationForCST } from './GetModulationForCST/GetModulationForCST'
 import { ListOfRows } from './ListOfRows/ListOfRows'
 
 export function ListOfValues({ preparedRows, setPreparedRows }) {
-  console.log(preparedRows)
+  // console.log(preparedRows)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [content, setContent] = useState(null)
   // const [preparedRows, setPreparedRows] = useState(listOfvariables.filter((el) => el.length > 0)

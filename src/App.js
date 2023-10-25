@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import style from './App.css'
 import { ListOfValues } from './components/ListOfValues'
 import { DownloadFile } from './components/DownloadFile/DownloadFile'
 
@@ -45,13 +46,19 @@ function App() {
 
   if (listOfvariables.length === 0) {
     return (
-      <DownloadFile setSelectedFile={setSelectedFile} />
+      <div className={style.singleElementWrapper}>
+        <DownloadFile setSelectedFile={setSelectedFile} />
+      </div>
     )
   }
   return (
     <>
-      <DownloadFile setSelectedFile={setSelectedFile} />
-      <ListOfValues preparedRows={preparedRows} setPreparedRows={setPreparedRows} />
+      <div className={style.asd}>
+        <DownloadFile setSelectedFile={setSelectedFile} />
+      </div>
+      <div>
+        <ListOfValues preparedRows={preparedRows} setPreparedRows={setPreparedRows} />
+      </div>
     </>
   )
 }
